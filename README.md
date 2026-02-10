@@ -1,1 +1,1 @@
-*`This is my repository for Analysis of Algorithms course.
+# This is my repository for Analysis of Algorithms course.
