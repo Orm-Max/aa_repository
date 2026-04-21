@@ -9,7 +9,7 @@ from collections import deque
 # Configuration
 DELAY = 0.6  # seconds between frames (lower = faster)
 
-# ─── Pre-defined graph layouts ────────────────────────────────────────────────
+# Pre-defined graph layouts
 
 GRAPH_LAYOUTS = {
     "small": {
@@ -26,27 +26,8 @@ GRAPH_LAYOUTS = {
             9: (5.0, 0.5),
         },
     },
-    "medium": {
-        "edges": [
-            (0,1),(0,2),(0,3),
-            (1,4),(1,5),
-            (2,5),(2,6),
-            (3,6),(3,7),
-            (4,8),(5,8),(5,9),
-            (6,9),(6,10),
-            (7,10),(7,11),
-            (8,12),(9,12),(9,13),
-            (10,13),(11,13),
-        ],
-        "pos": {
-             0: (6.0, 9.0),
-             1: (3.0, 7.0), 2: (6.0, 7.0), 3: (9.0, 7.0),
-             4: (1.5, 5.0), 5: (4.5, 5.0), 6: (7.5, 5.0), 7: (10.5, 5.0),
-             8: (2.5, 3.0), 9: (5.5, 3.0),10: (8.5, 3.0),11: (11.0, 3.0),
-            12: (3.5, 1.0),13: (7.5, 1.0),
-        },
-    },
-    "random": None,  # generated dynamically
+    "random": None,
+
 }
 
 
@@ -75,7 +56,7 @@ def generate_random_graph(n=12):
     return {"edges": list(edges), "pos": pos}
 
 
-# ─── Visualizer ───────────────────────────────────────────────────────────────
+# Visualizer
 
 class GraphVisualizer:
     NODE_RADIUS = 0.45
@@ -159,7 +140,7 @@ class GraphVisualizer:
         # Draw initial state
         self._draw()
 
-    # ── Internal drawing helpers ──────────────────────────────────────────────
+    # Internal drawing helpers
 
     def _draw(self, title="", step_msg=""):
         self.ax_graph.cla()
@@ -224,7 +205,7 @@ class GraphVisualizer:
             labelcolor="white", fontsize=9, framealpha=0.9,
         )
 
-        # ── Right panel: queue / stack ────────────────────────────────────────
+        # Right panel: queue / stack
         ds_label = "Queue (FIFO)" if self.algo == "BFS" else "Stack (LIFO)"
         self.ax_ds.text(
             0.5, 0.95, ds_label,
@@ -295,7 +276,7 @@ class GraphVisualizer:
         self.fig.canvas.flush_events()
         time.sleep(DELAY)
 
-    # ── Public update method ──────────────────────────────────────────────────
+    # Public update method
 
     def update(self, current=None, in_ds=None, visited=None,
                active_edges=None, title="", step_msg=""):
@@ -327,7 +308,7 @@ class GraphVisualizer:
             step_msg="All nodes visited.",
         )
 
-    # ── BFS ───────────────────────────────────────────────────────────────────
+    # BFS
 
     def run_bfs(self, start=0):
         visited  = set([start])
@@ -375,7 +356,7 @@ class GraphVisualizer:
 
         self.mark_done()
 
-    # ── DFS ───────────────────────────────────────────────────────────────────
+    # DFS
 
     def run_dfs(self, start=0):
         visited  = set()
@@ -434,7 +415,7 @@ class GraphVisualizer:
         self.mark_done()
 
 
-# ─── Menu / Main ──────────────────────────────────────────────────────────────
+# Menu / Main
 
 ALGORITHMS = {
     "1": "BFS",
@@ -442,9 +423,8 @@ ALGORITHMS = {
 }
 
 GRAPHS = {
-    "1": ("Small  (10 nodes, tree-like)",  "small"),
-    "2": ("Medium (14 nodes, wider tree)", "medium"),
-    "3": ("Random (12 nodes)",             "random"),
+    "1": ("Tree-like (10 nodes)", "small"),
+    "2": ("Random (12 nodes)",    "random"),
 }
 
 
@@ -468,9 +448,8 @@ def main():
 
     print("""
   Graph layouts:
-    1 - Small  (10 nodes, tree-like)
-    2 - Medium (14 nodes, wider tree)
-    3 - Random (12 nodes)
+    1 - Tree-like (10 nodes)
+    2 - Random (12 nodes)
 """)
     gchoice = input("  Enter graph choice (default 1): ").strip() or "1"
     if gchoice not in GRAPHS:
@@ -515,4 +494,4 @@ if __name__ == "__main__":
         cont = input("\n  Run again? (y/n): ").strip().lower()
         if cont != "y":
             break
-    print("\n  Goodbye!")
+    print("\n  End!")
